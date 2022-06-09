@@ -25,10 +25,29 @@ void fastio(){
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 }
+//0/1 KNAPSACK
+//There are n items to out in knapsack. Maximise the profit. 
+
+int knapsack(vector<int> wt, vector<int> val, int weight, int n){
+
+	if(n==0|| weight==0) return 0;
+
+	if(wt[n-1]<=weight){
+		return max(val[n-1]+knapsack(wt,val,weight-wt[n-1],n-1), knapsack(wt,val,weight,n-1));
+
+	}
+	else 
+		return knapsack(wt,val,weight,n-1);
+}
+
 
 int main(){
 	fastio();
-	cout<<"hello";
+	vector<int> wt = {10,20,30};
+	vector<int> val = {60,100,120};
+	int n = wt.size();
+	cout<<knapsack(wt,val,50,n);
+
 
 
 
