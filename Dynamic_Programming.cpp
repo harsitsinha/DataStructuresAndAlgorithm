@@ -11,6 +11,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <cstring>
 
 using namespace std;
 
@@ -39,15 +40,50 @@ int knapsack(vector<int> wt, vector<int> val, int weight, int n){
 	else 
 		return knapsack(wt,val,weight,n-1);
 }
+int memo[1000000];
+//using memoisation
+int fib(int n){
+	int res =0;
+	if(memo[n]==-1){
+		if(n==1||n==0){
+			res = n;
+		}
+		else
+			return fib(n-1)+ fib(n-2);
+		memo[n] = res;
+	}
+	
+	return memo[n];
 
+}
+//using tabulation
+int fibTabular(int n){
+	vector<int> f(n+1,-1);
+	f[0]=0;f[1]=1;
+	for(int i=2;i<=n;i++){
+		f[i]=f[i-1]+f[i-2];
+	}
+	return f[n];
+
+}
 
 int main(){
 	fastio();
-	vector<int> wt = {10,20,30};
-	vector<int> val = {60,100,120};
-	int n = wt.size();
-	cout<<knapsack(wt,val,50,n);
+	////0-1 KNAPSACK
+	// vector<int> wt = {10,20,30};
+	// vector<int> val = {60,100,120};
+	// int n = wt.size();
+	// cout<<knapsack(wt,val,50,n);
 
+	////fibonaci using memoisation
+	// memset(memo,-1,sizeof(memo));
+	// cout<<fib(100);
+	
+	////fibonaci using tabulation
+	// cout<<fibTabular(10);
+
+
+		
 
 
 
