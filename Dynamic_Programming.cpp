@@ -40,6 +40,25 @@ int knapsack(vector<int> wt, vector<int> val, int weight, int n){
 	else 
 		return knapsack(wt,val,weight,n-1);
 }
+
+//0/1 KNAPSACK USING MEMOISATION
+//There are n items to out in knapsack. Maximise the profit. 
+int static t[100][100];
+int knapsack_memo(vector<int> wt, vector<int> val, int weight, int n){
+
+	if(n==0|| weight==0) return 0;
+	if(t[n][weight]!=-1) return t[n][weight];
+
+	if(wt[n-1]<=weight){
+		t[n][weight] = max(val[n-1]+knapsack_memo(wt,val,weight-wt[n-1],n-1), knapsack_memo(wt,val,weight,n-1));
+		return t[n][weight];
+
+	}
+	else 
+		t[n][weight] = knapsack_memo(wt,val,weight,n-1);
+		return t[n][weight];
+}
+
 int memo[1000000];
 //using memoisation
 int fib(int n){
@@ -75,12 +94,20 @@ int main(){
 	// int n = wt.size();
 	// cout<<knapsack(wt,val,50,n);
 
+	////0-1 KNAPSACK USING MEMOISATION
+	vector<int> wt = {10,20,30};
+	vector<int> val = {60,100,120};
+	int n = wt.size();
+	memset(t, -1, sizeof(t));
+	cout<<knapsack_memo(wt,val,50,n);
 	////fibonaci using memoisation
 	// memset(memo,-1,sizeof(memo));
 	// cout<<fib(100);
-	
+
 	////fibonaci using tabulation
 	// cout<<fibTabular(10);
+
+
 
 
 		
