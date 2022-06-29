@@ -60,26 +60,27 @@ int knapsack_memo(vector<int> wt, vector<int> val, int weight, int n){
 		return t[n][weight];
 }
 
-int knapsack_tab(vector<int> wt, vector<int> val, int w, int n){
-	int dp[n+1][w+1];
-	for (int i = 0; i <=n; i++)
-	{
-		for(int j =0;j<=w;j++)
-			if(i==0||j==0) dp[i][j]=0;
-	}
+int knapsack_tab(vector<int> wt, vector<int> val, int W, int n)
+{
+	int dp[n+1][W+1];
+	for(int i =0;i<=W;i++)
+		dp[0][i]= 0;
+	for(int i =0;i<=n;i++)
+		dp[i][0]= 0;
 	for(int i =1;i<=n;i++){
-		for(int j=1;j<=w;j++){
-			if(wt[i-1]<=j){
-				dp[i][j]= max(val[i-1]+dp[i-1][j-wt[i-1]],dp[i-1][j]);
+		for(int j =1;j<=W;j++){
+			if(wt[i-1]>W){
+				dp[i][j]= dp[i-1][j];
+
 			}
 			else{
-				dp[i][j]=dp[i-1][j];
+				dp[i][j] = max(val[i-1]+dp[i-1][j-wt[i-1]], dp[i-1][j]);
+
 			}
 		}
 	}
-	return dp[n][w];
+	return dp[n][W];
 }
-
 int memo[1000000];
 //using memoisation
 int fib(int n){
@@ -370,11 +371,11 @@ int main(){
 	// cout<<knapsack_memo(wt,val,50,n);
 
 	////0-1 KNAPSACK USING TABULATION
-	// vector<int> wt = {10,20,30};
-	// vector<int> val = {60,100,120};
-	// int n = wt.size();
+	vector<int> wt = {10,20,30};
+	vector<int> val = {60,100,120};
+	int n = wt.size();
 
-	// cout<<knapsack_tab(wt,val,50,n);
+	cout<<knapsack_tab(wt,val,50,n);
 
 	////fibonaci using memoisation
 	// memset(memo,-1,sizeof(memo));
@@ -428,10 +429,12 @@ int main(){
 
 	////Longest Increasing Subsequce LIC
 	// vector<int> vec = {3,4,2,8,10,5,1};
+	// vector<int> vec = {1,0,0,1,0,1,0};
 	// cout<<LIC(vec,vec.size());
 
-	////Longest Increasing Subsequce LIC using binary
+	//Longest Increasing Subsequce LIC using binary
 	// vector<int> vec = {3,4,2,8,10,5,1};
+	// vector<int> vec = {1,0,0,1,0,1,0};
 	// cout<<LIC_binary_search(vec,vec.size());
 
 	////Minimum deletion to make array sorted
@@ -443,8 +446,9 @@ int main(){
 	// cout<<Max_sum_LIC(vec,vec.size());
 
 	////Maximum Length Bitonic Subsequnce
-	vector<int> vec = {1,11,2,10,4,5,2,1};
-	cout<<Max_bitonic_subseq(vec,vec.size());
+	// vector<int> vec = {1,11,2,10,4,5,2,1};
+
+
 
 
 		
